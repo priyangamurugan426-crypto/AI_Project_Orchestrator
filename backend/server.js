@@ -23,7 +23,7 @@ app.post("/generate", async (req, res) => {
 
     try {
 
-        // IBM Authentication (Token Generation)
+        // IBM Authentication
 
         const tokenResponse = await axios.post(
 
@@ -32,7 +32,6 @@ app.post("/generate", async (req, res) => {
             new URLSearchParams({
 
                 grant_type: "urn:ibm:params:oauth:grant-type:apikey",
-
                 apikey: process.env.IBM_API_KEY
 
             }).toString(),
@@ -49,15 +48,12 @@ app.post("/generate", async (req, res) => {
 
         console.log("✅ IBM Token Generated");
 
-        // Temporary Project Blueprint Response
+        let blueprint = "";
 
-        return res.json({
+        if (domain === "Healthcare") {
 
-            success: true,
-
-            message: `
+            blueprint = `
             <h3>📋 Functional Requirements</h3>
-
             <ul>
                 <li>Patient Management</li>
                 <li>Doctor Management</li>
@@ -69,11 +65,9 @@ app.post("/generate", async (req, res) => {
             </ul>
 
             <h3>🏗 System Architecture</h3>
-
-            <p>Frontend → Node.js Backend → IBM watsonx Orchestrate → Database</p>
+            <p>Frontend → Node.js Backend → IBM watsonx Orchestrate → MySQL</p>
 
             <h3>🗄 Database Tables</h3>
-
             <ul>
                 <li>Patients</li>
                 <li>Doctors</li>
@@ -84,7 +78,6 @@ app.post("/generate", async (req, res) => {
             </ul>
 
             <h3>🌐 API Modules</h3>
-
             <ul>
                 <li>/patients</li>
                 <li>/doctors</li>
@@ -94,28 +87,175 @@ app.post("/generate", async (req, res) => {
             </ul>
 
             <h3>🎨 UI Screens</h3>
-
             <ul>
                 <li>Login</li>
                 <li>Dashboard</li>
-                <li>Patient Module</li>
-                <li>Doctor Module</li>
-                <li>Appointment Module</li>
-                <li>Billing Module</li>
+                <li>Patient Management</li>
+                <li>Doctor Management</li>
+                <li>Appointment Management</li>
             </ul>
+            `;
 
-            <h3>🚀 Deployment</h3>
+        }
 
+        else if (domain === "E-Commerce") {
+
+            blueprint = `
+            <h3>📋 Functional Requirements</h3>
             <ul>
-                <li>Frontend : Vercel</li>
-                <li>Backend : Render</li>
-                <li>AI Platform : IBM watsonx Orchestrate</li>
+                <li>Customer Registration</li>
+                <li>Product Management</li>
+                <li>Shopping Cart</li>
+                <li>Order Management</li>
+                <li>Payment Gateway</li>
+                <li>Inventory Management</li>
             </ul>
 
-            <hr>
+            <h3>🏗 System Architecture</h3>
+            <p>Frontend → Node.js Backend → IBM watsonx Orchestrate → MongoDB</p>
 
-            <b>IBM Authentication Successful ✅</b>
-            `,
+            <h3>🗄 Database Tables</h3>
+            <ul>
+                <li>Users</li>
+                <li>Products</li>
+                <li>Orders</li>
+                <li>Payments</li>
+                <li>Cart</li>
+                <li>Inventory</li>
+            </ul>
+
+            <h3>🌐 API Modules</h3>
+            <ul>
+                <li>/users</li>
+                <li>/products</li>
+                <li>/orders</li>
+                <li>/payments</li>
+                <li>/cart</li>
+            </ul>
+
+            <h3>🎨 UI Screens</h3>
+            <ul>
+                <li>Home</li>
+                <li>Product List</li>
+                <li>Product Details</li>
+                <li>Shopping Cart</li>
+                <li>Checkout</li>
+            </ul>
+            `;
+
+        }
+
+        else if (domain === "Education") {
+
+            blueprint = `
+            <h3>📋 Functional Requirements</h3>
+            <ul>
+                <li>Student Management</li>
+                <li>Teacher Management</li>
+                <li>Course Management</li>
+                <li>Attendance</li>
+                <li>Examinations</li>
+                <li>Result Management</li>
+            </ul>
+
+            <h3>🏗 System Architecture</h3>
+            <p>Frontend → Node.js Backend → IBM watsonx Orchestrate → PostgreSQL</p>
+
+            <h3>🗄 Database Tables</h3>
+            <ul>
+                <li>Students</li>
+                <li>Teachers</li>
+                <li>Courses</li>
+                <li>Attendance</li>
+                <li>Exams</li>
+                <li>Results</li>
+            </ul>
+
+            <h3>🌐 API Modules</h3>
+            <ul>
+                <li>/students</li>
+                <li>/teachers</li>
+                <li>/courses</li>
+                <li>/attendance</li>
+                <li>/results</li>
+            </ul>
+
+            <h3>🎨 UI Screens</h3>
+            <ul>
+                <li>Student Dashboard</li>
+                <li>Teacher Dashboard</li>
+                <li>Course Management</li>
+                <li>Attendance</li>
+                <li>Results</li>
+            </ul>
+            `;
+
+        }
+
+        else if (domain === "Banking") {
+
+            blueprint = `
+            <h3>📋 Functional Requirements</h3>
+            <ul>
+                <li>Customer Accounts</li>
+                <li>Fund Transfer</li>
+                <li>Transaction History</li>
+                <li>Loan Management</li>
+                <li>ATM Services</li>
+                <li>Reports</li>
+            </ul>
+
+            <h3>🏗 System Architecture</h3>
+            <p>Frontend → Node.js Backend → IBM watsonx Orchestrate → Oracle Database</p>
+
+            <h3>🗄 Database Tables</h3>
+            <ul>
+                <li>Customers</li>
+                <li>Accounts</li>
+                <li>Transactions</li>
+                <li>Loans</li>
+                <li>Cards</li>
+            </ul>
+            `;
+
+        }
+
+        else {
+
+            blueprint = `
+            <h3>📋 Functional Requirements</h3>
+            <ul>
+                <li>User Management</li>
+                <li>Authentication</li>
+                <li>Dashboard</li>
+                <li>Reports</li>
+                <li>Notifications</li>
+            </ul>
+
+            <h3>🏗 System Architecture</h3>
+            <p>Frontend → Node.js Backend → IBM watsonx Orchestrate → Database</p>
+            `;
+
+        }
+
+        blueprint += `
+        <h3>🚀 Deployment</h3>
+        <ul>
+            <li>Frontend : Vercel</li>
+            <li>Backend : Render</li>
+            <li>AI Platform : IBM watsonx Orchestrate</li>
+        </ul>
+
+        <hr>
+
+        <b>IBM Authentication Successful ✅</b>
+        `;
+
+        return res.json({
+
+            success: true,
+
+            message: blueprint,
 
             project: {
                 name: projectName,
