@@ -126,27 +126,36 @@ Chat directly with your deployed multi-agent system.
 <!-- Your JavaScript -->
 <script src="script.js"></script>
 
+<!-- Your JavaScript -->
+<script src="script.js"></script>
+
+<!-- IBM Watsonx Orchestrate Embedded Chat -->
 <script>
-  window.wxOConfiguration = {
+window.wxOConfiguration = {
     orchestrationID: "444e21be11f740a99fa6fa34f7d5bdb0_f19bf0bb-d264-4ea4-8091-ff2721958262",
     hostURL: "https://au-syd.watson-orchestrate.cloud.ibm.com",
     rootElementID: "root",
     deploymentPlatform: "ibmcloud",
     crn: "crn:v1:bluemix:public:watsonx-orchestrate:au-syd:a/444e21be11f740a99fa6fa34f7d5bdb0:f19bf0bb-d264-4ea4-8091-ff2721958262::",
     chatOptions: {
-        agentId: "8339cfb4-206d-4340-92a8-e120af52b923", 
-        agentEnvironmentId: "accee634-573f-4bb0-a11c-f934c3f28418",
+        agentId: "8339cfb4-206d-4340-92a8-e120af52b923",
+        agentEnvironmentId: "accee634-573f-4bb0-a11c-f934c3f28418"
     }
-  };
-  setTimeout(function () {
-    const script = document.createElement('script');
-    script.src = `${window.wxOConfiguration.hostURL}/wxochat/wxoLoader.js?embed=true`;
-    script.addEventListener('load', function () {
+};
+
+setTimeout(function () {
+    const script = document.createElement("script");
+    script.src =
+        `${window.wxOConfiguration.hostURL}/wxochat/wxoLoader.js?embed=true`;
+    script.onload = function () {
         wxoLoader.init();
-    });
+    };
     document.head.appendChild(script);
-  }, 0);                     
+}, 0);
 </script>
+
+</body>
+</html>
 
 
 
