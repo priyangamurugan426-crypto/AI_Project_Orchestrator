@@ -57,24 +57,68 @@ app.post("/generate", async (req, res) => {
         // Temporary response
         // Later we connect Watsonx Orchestrate agents here
 
-        res.json({
+       // Call IBM watsonx Orchestrate Agent
+
+const agentResponse = await axios.post(
+
+    `https://api.au-syd.watson-orchestrate.cloud.ibm.com/instances/f19bf0bb-d264-4ea4-8091-ff2721958262/api/v2/8339cfb4-206d-4340-92a8-e120af52b923/chat/completions`,
+
+    {
+        messages: [
+            {
+                role: "user",
+                content:
+                `
+Generate a complete software project blueprint.
+
+Project Name:
+${projectName}
+
+Domain:
+${domain}
+
+Description:
+${description}
+
+Provide:
+1. Requirements
+2. System Architecture
+3. Database Design
+4. API Design
+5. UI/UX Design
+6. Deployment Plan
+                `
+            }
+        ],
+        stream:false
+    },
+
+    {
+        headers:{
+            "Authorization": `Bearer ${accessToken}`,
+            "Content-Type":"application/json",
+            "Accept":"application/json",
+            "X-IBM-ENVIRONMENT-ID": process.env.IBM_ENVIRONMENT_ID
+        }
+    }
+
+);
+
+
+res.json({
 
     success:true,
 
     message:
-    "PRIYANGA TEST SUCCESS 12345",
+    agentResponse.data,
 
-            project:{
+    project:{
+        name: projectName,
+        domain: domain,
+        description: description
+    }
 
-                name: projectName,
-
-                domain: domain,
-
-                description: description
-
-            }
-
-        });
+});
 
 
     } catch(error){
