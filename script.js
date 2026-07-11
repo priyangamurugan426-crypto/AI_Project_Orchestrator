@@ -14,7 +14,7 @@ form.addEventListener("submit", async function (e) {
 
     const description = document.getElementById("description").value;
 
-    const response = await fetch("http://localhost:3000/generate", {
+    const response = await fetch("https://ai-project-orchestrator-6q0o.onrender.com/generate", {
 
         method: "POST",
 
