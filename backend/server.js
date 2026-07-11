@@ -9,12 +9,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-
+// Home Route
 app.get("/", (req, res) => {
     res.send("ProjectOrchestrator Backend Running!");
 });
 
-
+// Generate Project API
 app.post("/generate", async (req, res) => {
 
     console.log("🔥 GENERATE API CALLED");
@@ -23,7 +23,7 @@ app.post("/generate", async (req, res) => {
 
     try {
 
-        // Step 1: Get IBM IAM Token
+        // IBM Authentication (Token Generation)
 
         const tokenResponse = await axios.post(
 
@@ -31,109 +31,109 @@ app.post("/generate", async (req, res) => {
 
             new URLSearchParams({
 
-                grant_type:
-                "urn:ibm:params:oauth:grant-type:apikey",
+                grant_type: "urn:ibm:params:oauth:grant-type:apikey",
 
                 apikey: process.env.IBM_API_KEY
 
             }).toString(),
 
             {
-                headers:{
-                    "Content-Type":
-                    "application/x-www-form-urlencoded"
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
                 }
             }
 
         );
 
-
         const accessToken = tokenResponse.data.access_token;
-
 
         console.log("✅ IBM Token Generated");
 
+        // Temporary Project Blueprint Response
 
-        // Temporary response
-        // Later we connect Watsonx Orchestrate agents here
+        return res.json({
 
-       // Call IBM watsonx Orchestrate Agent
+            success: true,
 
-const agentResponse = await axios.post(
+            message: `
+            <h3>📋 Functional Requirements</h3>
 
-    `https://api.au-syd.watson-orchestrate.cloud.ibm.com/instances/f19bf0bb-d264-4ea4-8091-ff2721958262/api/v2/${process.env.IBM_AGENT_ID}/chat/completions`,
+            <ul>
+                <li>Patient Management</li>
+                <li>Doctor Management</li>
+                <li>Appointment Scheduling</li>
+                <li>Billing Management</li>
+                <li>Pharmacy Management</li>
+                <li>Medical Records</li>
+                <li>Reports Generation</li>
+            </ul>
 
-    {
-        messages: [
-            {
-                role: "user",
-                content:
-                `
-Generate a complete software project blueprint.
+            <h3>🏗 System Architecture</h3>
 
-Project Name:
-${projectName}
+            <p>Frontend → Node.js Backend → IBM watsonx Orchestrate → Database</p>
 
-Domain:
-${domain}
+            <h3>🗄 Database Tables</h3>
 
-Description:
-${description}
+            <ul>
+                <li>Patients</li>
+                <li>Doctors</li>
+                <li>Appointments</li>
+                <li>Medicines</li>
+                <li>Billing</li>
+                <li>Medical Records</li>
+            </ul>
 
-Provide:
-1. Requirements
-2. System Architecture
-3. Database Design
-4. API Design
-5. UI/UX Design
-6. Deployment Plan
-                `
+            <h3>🌐 API Modules</h3>
+
+            <ul>
+                <li>/patients</li>
+                <li>/doctors</li>
+                <li>/appointments</li>
+                <li>/billing</li>
+                <li>/pharmacy</li>
+            </ul>
+
+            <h3>🎨 UI Screens</h3>
+
+            <ul>
+                <li>Login</li>
+                <li>Dashboard</li>
+                <li>Patient Module</li>
+                <li>Doctor Module</li>
+                <li>Appointment Module</li>
+                <li>Billing Module</li>
+            </ul>
+
+            <h3>🚀 Deployment</h3>
+
+            <ul>
+                <li>Frontend : Vercel</li>
+                <li>Backend : Render</li>
+                <li>AI Platform : IBM watsonx Orchestrate</li>
+            </ul>
+
+            <hr>
+
+            <b>IBM Authentication Successful ✅</b>
+            `,
+
+            project: {
+                name: projectName,
+                domain: domain,
+                description: description
             }
-        ],
-        stream:false
-    },
 
-    {
-        headers:{
-            "Authorization": `Bearer ${accessToken}`,
-            "Content-Type":"application/json",
-            "Accept":"application/json",
-            "X-IBM-ENVIRONMENT-ID": process.env.IBM_ENVIRONMENT_ID
-        }
-    }
+        });
 
-);
+    } catch (error) {
 
-
-res.json({
-
-    success:true,
-
-    message:
-    agentResponse.data,
-
-    project:{
-        name: projectName,
-        domain: domain,
-        description: description
-    }
-
-});
-
-
-    } catch(error){
-
-
-        console.log(
-            error.response?.data || error.message
-        );
-
+        console.log(error.response?.data || error.message);
 
         res.status(500).json({
 
-            success:false,
+            success: false,
 
-            error:error.message
+            error: error.message
 
         });
 
@@ -141,17 +141,14 @@ res.json({
 
 });
 
-
+// Start Server
 
 app.listen(3000, () => {
 
     console.log("==============================");
     console.log("ProjectOrchestrator Backend Running!");
     console.log("Server: http://localhost:3000");
-    console.log(
-        "IBM_API_KEY:",
-        process.env.IBM_API_KEY ? "Loaded" : "Missing"
-    );
+    console.log("IBM_API_KEY:", process.env.IBM_API_KEY ? "Loaded" : "Missing");
     console.log("==============================");
 
 });
