@@ -61,7 +61,7 @@ app.post("/generate", async (req, res) => {
 
 const agentResponse = await axios.post(
 
-    `https://api.au-syd.watson-orchestrate.cloud.ibm.com/instances/f19bf0bb-d264-4ea4-8091-ff2721958262/api/v2/8339cfb4-206d-4340-92a8-e120af52b923/chat/completions`,
+    `https://api.au-syd.watson-orchestrate.cloud.ibm.com/instances/f19bf0bb-d264-4ea4-8091-ff2721958262/api/v2/${process.env.IBM_AGENT_ID}/chat/completions`,
 
     {
         messages: [
