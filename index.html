@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProjectOrchestrator_AI</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+<body>
+
+<header>
+
+    <div class="logo">
+        🚀 ProjectOrchestrator_AI
+    </div>
+
+</header>
+
+<section class="hero">
+
+    <h1>Generate Complete Software Projects using AI</h1>
+
+    <p>
+        Enter your project idea and let AI generate the
+        complete Requirements, Architecture, Database,
+        APIs, UI/UX, and Deployment Plan.
+    </p>
+
+</section>
+
+<div class="container">
+
+<form id="projectForm">
+
+<label>Project Name</label>
+
+<input
+type="text"
+id="projectName"
+placeholder="Example: Smart Hospital Management System"
+required>
+
+<label>Domain</label>
+
+<select id="domain">
+
+<option>Healthcare</option>
+
+<option>Education</option>
+
+<option>Banking</option>
+
+<option>E-Commerce</option>
+
+<option>Finance</option>
+
+<option>AI</option>
+
+<option>IoT</option>
+
+<option>Manufacturing</option>
+
+<option>Government</option>
+
+<option>Custom</option>
+
+</select>
+
+<label>Project Description</label>
+
+<textarea
+id="description"
+rows="7"
+placeholder="Describe your software project..."
+required></textarea>
+
+<button type="submit">
+
+<i class="fa-solid fa-wand-magic-sparkles"></i>
+
+Generate Project
+
+</button>
+
+</form>
+
+</div>
+
+<div id="loading">
+
+<div class="loader"></div>
+
+<p>Generating your project...</p>
+
+</div>
+
+<div id="result"></div>
+
+<!-- =============================== -->
+<!-- IBM Embedded AI Assistant -->
+<!-- =============================== -->
+
+<section style="width:90%;max-width:1000px;margin:50px auto;">
+
+<h2 style="text-align:center;margin-bottom:15px;">
+🤖 ProjectOrchestrator_AI Assistant
+</h2>
+
+<p style="text-align:center;color:#666;margin-bottom:25px;">
+Chat directly with your deployed multi-agent system.
+</p>
+
+<div id="root"></div>
+
+</section>
+
+<!-- Your JavaScript -->
+<script src="script.js"></script>
+
+<script>
+  window.wxOConfiguration = {
+    orchestrationID: "444e21be11f740a99fa6fa34f7d5bdb0_f19bf0bb-d264-4ea4-8091-ff2721958262",
+    hostURL: "https://au-syd.watson-orchestrate.cloud.ibm.com",
+    rootElementID: "root",
+    deploymentPlatform: "ibmcloud",
+    crn: "crn:v1:bluemix:public:watsonx-orchestrate:au-syd:a/444e21be11f740a99fa6fa34f7d5bdb0:f19bf0bb-d264-4ea4-8091-ff2721958262::",
+    chatOptions: {
+        agentId: "8339cfb4-206d-4340-92a8-e120af52b923", 
+        agentEnvironmentId: "accee634-573f-4bb0-a11c-f934c3f28418",
+    }
+  };
+  setTimeout(function () {
+    const script = document.createElement('script');
+    script.src = `${window.wxOConfiguration.hostURL}/wxochat/wxoLoader.js?embed=true`;
+    script.addEventListener('load', function () {
+        wxoLoader.init();
+    });
+    document.head.appendChild(script);
+  }, 0);                     
+</script>
+
+
+
+</body>
+</html>
